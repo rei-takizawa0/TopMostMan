@@ -6,13 +6,13 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MostTopMan.Models.Logics
+namespace TopMostMan.Models.Logics
 {
     public class TopMost
     {
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool SetWindowProperty(IntPtr handle, IntPtr order, int x, int y, int width, int height, uint mode);
+        static extern bool SetWindowPos(IntPtr handle, IntPtr order, int x, int y, int width, int height, uint mode);
 
         const uint SWP_NOSIZE = 0x0001;
         const uint SWP_NOMOVE = 0x0002;
@@ -37,7 +37,7 @@ namespace MostTopMan.Models.Logics
         /// <exception cref="Exception"></exception>
         private IntPtr GetWindowHandle(int processId)
         {
-            if (ProcessExists(processId))
+            if (!ProcessExists(processId))
             {
                 throw new Exception("対象のプロセスが見つかりませんでした。");
             }
@@ -75,7 +75,7 @@ namespace MostTopMan.Models.Logics
         /// </summary>
         public void Execute()
         {
-            SetWindowProperty(_windowHandle, new IntPtr(-1), 0, 0, 0, 0, TOPMOST_FLAGS);
+            SetWindowPos(_windowHandle, new IntPtr(-1), 0, 0, 0, 0, TOPMOST_FLAGS);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace MostTopMan.Models.Logics
         /// </summary>
         public void Release()
         {
-            SetWindowProperty(_windowHandle, IntPtr.Zero, 0, 0, 0, 0, TOPMOST_FLAGS);
+            SetWindowPos(_windowHandle, IntPtr.Zero, 0, 0, 0, 0, TOPMOST_FLAGS);
         }
     }
 }
