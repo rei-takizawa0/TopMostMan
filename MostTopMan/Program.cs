@@ -1,10 +1,12 @@
-﻿using System;
+﻿using TopMostMan.Presenter;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TopMostMan.Models.Logics;
 
-namespace MostTopMan
+namespace TopMostMan
 {
     internal static class Program
     {
@@ -16,7 +18,9 @@ namespace MostTopMan
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Main());
+            MainForm main = new MainForm();
+            MainFormPresenter formPresenter = new MainFormPresenter(main);
+            Application.Run(main);
         }
     }
 }
